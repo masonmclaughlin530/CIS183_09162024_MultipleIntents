@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,9 @@ public class AddNewPet extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     String petType = Pet.PetType.getPetAt(0);
 
+    TextView tv_j_addNewType;
+    Intent addNewType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +41,40 @@ public class AddNewPet extends AppCompatActivity {
         et_j_petAge         = findViewById(R.id.et_v_age);
         sp_j_dropDown       = findViewById(R.id.sp_v_typesDropDown);
 
+        tv_j_addNewType     = findViewById(R.id.tv_v_addPet_newType);
+
+        addNewType = new Intent(AddNewPet.this, AddNewPetType.class);
+
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Pet.PetType.getAllPetTypes());
         sp_j_dropDown.setAdapter(adapter);
 
         intent_j_MainActivity = new Intent(AddNewPet.this, MainActivity.class);
         //code to get info passed from mainactivity.java
         //get the intent that called me
-        Intent cameFrom = getIntent();
+        //Intent cameFrom = getIntent();
         //get the bundle that was passed to me from "cameFrom" intent
-        Bundle infoPassedToMe = cameFrom.getExtras();
+        //Bundle infoPassedToMe = cameFrom.getExtras();
         //Get the info in the bundle called "InfoPassed" -> set in MainActivity.java
-        String data = infoPassedToMe.getString("InfoPassed");
+        //String data = infoPassedToMe.getString("InfoPassed");
 
-        Log.d("INFO PASSED FROM MAIN: ", data);
+        //Log.d("INFO PASSED FROM MAIN: ", data);
 
         addPetButtonListener();
         spinnerEventListener();
+        addNewTypeEventListener();
 
 
+    }
+
+    private void addNewTypeEventListener()
+    {
+        tv_j_addNewType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                    startActivity(addNewType);
+            }
+        });
     }
 
     private void spinnerEventListener()
